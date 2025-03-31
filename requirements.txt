@@ -1,0 +1,21 @@
+# ===================================
+# 🚀 Project 3B: Airflow DAG Automation - requirements.txt
+# ===================================
+
+# Core ETL & SQL Support
+pandas==2.2.3
+SQLAlchemy==2.0.39
+psycopg2-binary==2.9.10
+
+# Logging & Monitoring
+loguru==0.7.3
+
+# DateTime Management
+pendulum==3.0.0
+
+# External API Support
+requests==2.31.0
+
+# DAG Local Testing Utilities
+python-dotenv==1.0.1
+pytest==8.3.5
