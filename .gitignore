@@ -1,0 +1,87 @@
+# ======================================
+# 🚀 Project 3B: Apache Airflow DAG Automation (.gitignore)
+# ======================================
+
+# ------------------------------------
+# ✅ Python Virtual Environments
+# ------------------------------------
+venv/
+etl_env/
+C:/venvs/
+.env
+
+# ------------------------------------
+# ✅ Secrets & Configurations
+# ------------------------------------
+.env
+secrets.json
+**/*.yml
+**/*.yaml
+**/*.json
+
+# ------------------------------------
+# ✅ Docker Volumes & Runtime Files
+# ------------------------------------
+docker/logs/
+docker/airflow_volume/
+docker/postgres_db/
+*.sock
+
+# ------------------------------------
+# ✅ Airflow Metadata & Artifacts
+# ------------------------------------
+airflow_logs/
+uncommitted_dags/
+airflow.db
+*.pid
+*.err
+*.out
+
+# ------------------------------------
+# ✅ Logs & Runtime Output
+# ------------------------------------
+logs/
+*.log
+
+# ------------------------------------
+# ✅ Python Compiled Files
+# ------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ------------------------------------
+# ✅ Testing Framework
+# ------------------------------------
+.pytest_cache/
+tests/tmp/
+
+# ------------------------------------
+# ✅ Sandbox & Debug Scripts
+# ------------------------------------
+sandbox/*
+!sandbox/.gitkeep
+
+# ------------------------------------
+# ✅ Documentation (Internal-Only)
+# ------------------------------------
+developer_notes.md
+
+# ------------------------------------
+# ✅ VS Code Settings
+# ------------------------------------
+.vscode/
+
+# ------------------------------------
+# ✅ dbt (Project 3C Future-Proofing)
+# ------------------------------------
+dbt_modules/
+dbt_packages/
+dbt_profiles.yml
+target/
+
+# ------------------------------------
+# ✅ SQL Files (Explicitly allow versioned SQL scripts)
+# ------------------------------------
+!sql_queries/**/*.sql
