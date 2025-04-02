@@ -17,8 +17,9 @@ C:/venvs/
 secrets.json
 **/*.yml
 **/*.yaml
-**/*.json
 !docker-compose.yaml    # Whitelist this important config file
+**/*.json
+
 
 # ------------------------------------
 # ✅ Docker Volumes & Runtime Files
