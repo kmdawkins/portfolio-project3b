@@ -18,7 +18,7 @@ secrets.json
 **/*.yml
 **/*.yaml
 **/*.json
-!docker-compose.yaml # Whitelist this important config file
+!docker-compose.yaml    # Whitelist this important config file
 
 # ------------------------------------
 # ✅ Docker Volumes & Runtime Files
