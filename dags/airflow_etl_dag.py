@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
 from pendulum import datetime
