@@ -65,6 +65,7 @@ tests/tmp/
 sandbox/*
 !sandbox/.gitkeep
 !sandbox/generate_fernet_key.py
+!sandbox/create_airflow_admin_user.py
 
 # ------------------------------------
 # ✅ Documentation (Internal-Only)
