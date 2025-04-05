@@ -2,8 +2,13 @@
 from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
 import pandas as pd
+import sys
+from pathlib import Path
 
-# Modular utility imports
+# ✅ Add this for Docker container to resolve etl_pipeline
+sys.path.append(str(Path("/opt/airflow/etl_pipeline").resolve()))
+
+# ✅ Custom utility imports (these now work in Docker)
 from etl_pipeline.utils.file_checker import check_file_exists, validate_file_extension
 from etl_pipeline.utils.csv_loader import load_csv_with_fallback
 
@@ -44,10 +49,18 @@ def etl_staging_pmo():
     def transform(pickle_path: str) -> pd.DataFrame:
         import pandas as pd
         from loguru import logger
+        from datetime import datetime
+        import os
+
 
         logger.info("🔁 Starting data transformation...")
-        df = pd.read_pickle(pickle_path)
 
+
+        # Load extracted DataFrame
+        df = pd.read_pickle(pickle_path)
+        
+
+        # ✅ Column renaming (adjust mapping as needed)
         rename_map = {
             "Old Column A": "new_column_a",
             "Old Column B": "new_column_b",
@@ -56,10 +69,21 @@ def etl_staging_pmo():
 
         df = df.rename(columns=rename_map)
         logger.info(f"📝 Columns renamed: {rename_map}")
+        
 
+        # 📊 Pre-cleaning stats
         initial_row_count = len(df)
-        null_row_count = df.isnull().any(axis=1).sum()
+        rows_with_nulls = df[df.isnull().any(axis=1)]
+        null_row_count = len(row_with_nulls)
 
+        # 🗑️ Export dropped rows to CSV (timestamped for traceability)
+        if null_row_count > 0:
+            timestamp = datetime.now().strftime("%Y%m%m_%H%M%S")
+            dropped_path = f"include/dropped_rows_{timestamp}.csv"
+            rows_with_nulls.to_csv(dropped_path, index=False)
+            logger.warning(f"🗑️ Dropped {null_row_count} rows with nulls → saved to: {dropped_path} ")
+        
+        # 🧼 Drop rows with nulls
         df_cleaned = df.dropna()
         final_row_count = len(df_cleaned)
 
