@@ -1,0 +1,7 @@
+FROM apache/airflow:2.8.1-python3.11
+
+# Install any required Python packages
+RUN pip install --no-cache-dir loguru
+
+# Set PYTHONPATH to include both the base and etl_pipeline module
+ENV PYTHONPATH="/opt/airflow:/opt/airflow/etl_pipeline"
