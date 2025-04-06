@@ -6,9 +6,9 @@ services:
     container_name: airflow_postgres
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
@@ -17,9 +17,14 @@ services:
       - airflow_network
 
   airflow-webserver:
-    image: apache/airflow:2.8.1-python3.11
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.airflow
+    image: custom_airflow:2.8.1-python3.11
     container_name: airflow_webserver
     restart: always
+    env_file:
+      - .env
     depends_on:
       - postgres
     environment:
@@ -32,7 +37,8 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      - ./etl_pipeline:/opt/airflow/etl_pipeline # Mount etl_pipeline
+      - ./etl_pipeline:/opt/airflow/etl_pipeline
+      - ./include:/opt/airflow/include        # ✅ NEW: ensure DAG can see the input CSV file
     ports:
       - "8080:8080"
     command: webserver
@@ -40,9 +46,14 @@ services:
       - airflow_network
 
   airflow-scheduler:
-    image: apache/airflow:2.8.1-python3.11
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.airflow
+    image: custom_airflow:2.8.1-python3.11
     container_name: airflow_scheduler
     restart: always
+    env_file:
+      - .env
     depends_on:
       - postgres
     environment:
@@ -54,7 +65,8 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      - ./etl_pipeline:/opt/airflow/etl_pipeline # Mount etl_pipeline
+      - ./etl_pipeline:/opt/airflow/etl_pipeline
+      - ./include:/opt/airflow/include        # ✅ NEW: ensure scheduler also has access
     command: scheduler
     networks:
       - airflow_network
