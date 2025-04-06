@@ -43,3 +43,26 @@ This project uses `python-dotenv` to load environment variables securely.
 ```bash
 docker compose up airflow-init
 docker compose up
+```
+
+## ✅ Apache Airflow DAG Test via CLI (Succesful Run)
+
+> Command tested:
+```bash
+docker compose exec airflow-webserver airflow dags test etl_staging_pmo 2025-04-05
+
+
+✔️ extract     → 255,000 rows loaded
+✔️ transform   → Columns renamed, 0 nulls dropped, 255,000 rows cleaned
+✔️ load        → Loaded to staging table: etl.staging_pmo
+✅ DAGRun Finished: state=success
+
+```
+
+### Screenshot: Airflow DAG CLI Test
+
+**Command tested:**
+![Airflow DAG CLI Test](diagrams/dag_test_cli_success1.png)
+
+**All Tasks Completed Successfully**
+![Airflow DAG CLI Test](diagrams/dag_test_cli_success2.png)
