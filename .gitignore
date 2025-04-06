@@ -46,6 +46,12 @@ logs/
 *.log
 
 # ------------------------------------
+# ✅ ETL Artifacts (Intermediate / Temp Files)
+# ------------------------------------
+include/intermediate_*.pkl
+include/dropped_rows_*.csv
+
+# ------------------------------------
 # ✅ Python Compiled Files
 # ------------------------------------
 __pycache__/
