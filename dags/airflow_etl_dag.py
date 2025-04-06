@@ -52,13 +52,10 @@ def etl_staging_pmo():
         from datetime import datetime
         import os
 
-
         logger.info("🔁 Starting data transformation...")
-
 
         # Load extracted DataFrame
         df = pd.read_pickle(pickle_path)
-        
 
         # ✅ Column renaming (adjust mapping as needed)
         rename_map = {
@@ -69,20 +66,19 @@ def etl_staging_pmo():
 
         df = df.rename(columns=rename_map)
         logger.info(f"📝 Columns renamed: {rename_map}")
-        
 
         # 📊 Pre-cleaning stats
         initial_row_count = len(df)
         rows_with_nulls = df[df.isnull().any(axis=1)]
-        null_row_count = len(row_with_nulls)
+        null_row_count = len(rows_with_nulls)
 
         # 🗑️ Export dropped rows to CSV (timestamped for traceability)
         if null_row_count > 0:
-            timestamp = datetime.now().strftime("%Y%m%m_%H%M%S")
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             dropped_path = f"include/dropped_rows_{timestamp}.csv"
             rows_with_nulls.to_csv(dropped_path, index=False)
-            logger.warning(f"🗑️ Dropped {null_row_count} rows with nulls → saved to: {dropped_path} ")
-        
+            logger.warning(f"🗑️ Dropped {null_row_count} rows with nulls → saved to: {dropped_path}")
+
         # 🧼 Drop rows with nulls
         df_cleaned = df.dropna()
         final_row_count = len(df_cleaned)
