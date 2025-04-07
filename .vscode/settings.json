@@ -1,0 +1,21 @@
+{
+    // ✅ Set Python interpreter explicitly (uncomment + update if needed)
+    // "python.defaultInterpreterPath": "C:\\venvs\\etl_env\\Scripts\\python.exe",
+    // ✅ Ensure consistent formatting
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    // ✅ Automatically apply formatting on save
+    "editor.formatOnSave": true,
+    // ✅ Respect .editorconfig settings (VS Code defaults to true, but explicit is better)
+    "editor.useEditorConfig": true,
+    // ✅ Python-specific linting (optional)
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": false,
+    // ✅ Python formatting style
+    "python.formatting.provider": "autopep8",
+    // ✅ Trim whitespace
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true
+}

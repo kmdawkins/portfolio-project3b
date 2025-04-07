@@ -81,7 +81,8 @@ developer_notes.md
 # ------------------------------------
 # ✅ VS Code Settings
 # ------------------------------------
-.vscode/
+.vscode/*
+!.vscode/settings.json
 
 # ------------------------------------
 # ✅ dbt (Project 3C Future-Proofing)
