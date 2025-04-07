@@ -90,8 +90,36 @@ def etl_staging_pmo():
         return df_cleaned
 
     @task()
-    def load(clean_df: pd.DataFrame):
-        print("⬇️ Load: insert into etl.staging_pmo via SQLAlchemy")
+    def load(clean_df: pd.DataFrame) -> None:
+        """Load cleaned data into staging table in PostgreSQL"""
+        from loguru import logger
+        from sqlalchemy import text
+        from etl_pipeline.utils.db_connector import get_sqlalchemy_engine
+
+        try:
+            engine = get_sqlalchemy_engine()
+
+            # ✅ Ensure 'etl' schema exists before loading
+            with engine.begin() as conn:
+                conn.execute(text("CREATE SCHEMA IF NOT EXISTS etl"))
+
+            logger.info("⬇️ Starting load into PostgreSQL: etl.staging_pmo...")
+
+            # ✅ Perform the load (current mode: full replace)
+            clean_df.to_sql(
+                name="staging_pmo",
+                con=engine,
+                schema="etl",
+                if_exists="replace",   # Future: switch to 'append' for incremental loads
+                index=False,
+                method="multi",        # Efficient batch inserts
+            )
+
+            logger.success(f"✅ Load complete. Rows inserted: {len(clean_df)}")
+
+        except Exception as e:
+            logger.error(f"❌ Load failed: {str(e)}")
+            raise
 
     # ✅ DAG wiring
     pickle_path = extract()
