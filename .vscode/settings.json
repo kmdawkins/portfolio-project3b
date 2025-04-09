@@ -9,13 +9,15 @@
     "editor.formatOnSave": true,
     // ✅ Respect .editorconfig settings (VS Code defaults to true, but explicit is better)
     "editor.useEditorConfig": true,
+    // ✅ Enforce LF line endings in VS Code (prevents CRLF)
+    "files.eol": "\n",
+    // ✅ Trim whitespace and add newline at end of files
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
     // ✅ Python-specific linting (optional)
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
     "python.linting.mypyEnabled": false,
     // ✅ Python formatting style
-    "python.formatting.provider": "autopep8",
-    // ✅ Trim whitespace
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true
+    "python.formatting.provider": "autopep8"
 }
