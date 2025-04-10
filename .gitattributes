@@ -19,7 +19,7 @@
 *.yml     text eol=lf
 *.json    text eol=lf
 *.md      text eol=lf
-*.env     text eol=lf        # ✅ Now normalized like source files
+*.env     text eol=lf
 .gitattributes text eol=lf
 .gitignore     text eol=lf
 
